@@ -7,7 +7,9 @@
    * Override sync behavior.
    */
   Backbone.sync = function(method, model, options) {
-    return;
+    if (!(model instanceof List)) {
+      return;
+    }
   };
 
   /**
@@ -77,6 +79,8 @@
     template: _.template($('#list-template').html()),
     events: {
       'click #add-item': 'addNewItem',
+      'click #save-list': 'saveList',
+      'click #delete-list': 'deleteList',
     },
     initialize: function() {
       this.model.items.bind('add', this.addOne, this);
@@ -122,6 +126,9 @@
       $('#new-item-cat').val('');
 
       return false;
+    },
+    saveList: function() {
+      this.model.save();
     }
   });
 
