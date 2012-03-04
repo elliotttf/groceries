@@ -2,6 +2,10 @@
  * @fileoverview Backbone definitions for lists.
  */
 
+if (typeof require !== 'undefined') {
+  var Backbone = require('backbone');
+}
+
 /**
  * Defines a list item.
  */
@@ -26,6 +30,11 @@ var Items = Backbone.Collection.extend({
 var List = Backbone.Model.extend({
   initialize: function() {
     this.items = new Items();
+  },
+  toJSON: function() {
+    var json = _.clone(this.attributes);
+    json.items = this.items.toJSON();
+    return json;
   },
   /**
    * Returns the number of remaining items on the list.

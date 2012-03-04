@@ -6,7 +6,7 @@
     "backbone": "0.9.1",
     "union": "0.1.7",
     "flatiron": "0.1.14",
-    "mongodb": "0.9.9-4"
+    "mongous": "0.2.2"
   },
   "devDependencies": {
     "api-easy": "0.3.2",

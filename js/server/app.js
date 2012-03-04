@@ -10,20 +10,54 @@ app.use(flatiron.plugins.http);
 app.use(require('./plugins/list'));
 
 app.init(function(err) {
+  if (err) {
+    console.error(err);
+  }
 });
 
+/**
+ * Gets the latest list.
+ */
 app.router.get('/', function () {
-  this.res.json({ 'hello': 'world' })
-});
-app.router.get('/:list', function(listId) {
-  app.load(listId, function(err, list) {
+  var self = this;
+  app.load(function(err, list) {
     if (err) {
-      this.res.writeHead(404, { 'Content-Type': 'text/plain' });
-      this.res.json({ status: 'Unknown list.' });
+      self.res.writeHead(404, { 'Content-Type': 'application/json' });
+      self.res.json({ status: 'Unknown list.' });
       return;
     }
-    this.res.json({ status: 'ok', list: list });
+    self.res.json({ status: 'ok', list: list });
+  });
+});
+
+/**
+ * Saves a new list.
+ */
+app.router.post('/', function() {
+  var self = this;
+  app.save(self.req.body, function(err, list) {
+    if (err) {
+      self.res.writeHead(500, { 'Content-Type': 'application/json' });
+      self.res.json({ status: 'Error saving.' });
+    }
+    self.res.json({ status: 'ok', list: list });
+  });
+});
+
+
+/**
+ * Updates a list.
+ */
+app.router.put('/:id', function(id) {
+  var self = this;
+  app.save(self.req.body, function(err, list) {
+    if (err) {
+      self.res.writeHead(500, { 'Content-Type': 'application/json' });
+      self.res.json({ status: 'Error saving.' });
+    }
+    self.res.json({ status: 'ok', list: list });
   });
 });
 
 app.start(settings.port);
+

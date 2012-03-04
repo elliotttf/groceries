@@ -6,6 +6,40 @@
     if (!(model instanceof List)) {
       return;
     }
+    if (method == 'create') {
+      $.ajax({
+        url: 'app',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(model.toJSON()),
+        dataType: 'json',
+        success: function(data) {
+          if (data.status == 'ok') {
+            model.set(data.list);
+          }
+          else {
+            alert('huh?');
+          }
+        },
+      });
+    }
+    else if (method == 'update') {
+      $.ajax({
+        url: 'app/' + model.id,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(model.toJSON()),
+        dataType: 'json',
+        success: function(data) {
+          if (data.status == 'ok') {
+            model.set(data.list);
+          }
+          else {
+            alert('huh?');
+          }
+        },
+      });
+    }
   };
 
   /**
@@ -43,7 +77,7 @@
       this.model.items.bind('add', this.addOne, this);
       this.model.items.bind('reset', this.addAll, this);
     },
-    render: function() {
+        render: function() {
       $(this.el).html(this.template({
         total: this.model.items.length,
         remaining: this.model.remaining(),
