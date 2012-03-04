@@ -74,6 +74,7 @@
       return this;
     },
     updateStatus: function(e) {
+      $('#label-item' + this.model.id).toggleClass('checked');
       this.model.set('inBasket', e.currentTarget.checked);
       listView.updateRemaining();
     },
@@ -109,6 +110,7 @@
       $('#list').append(view.render().el);
       if (item.get('inBasket')) {
         $('#check-item' + item.id).attr('checked', true);
+        $('#label-item' + item.id).addClass('checked');
       }
 
     },
