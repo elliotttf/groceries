@@ -20,7 +20,7 @@ app.init(function(err) {
  */
 app.router.get('/', function () {
   var self = this;
-  app.load(function(err, list) {
+  app.load(false, function(err, list) {
     if (err) {
       self.res.writeHead(404, { 'Content-Type': 'application/json' });
       self.res.json({ status: 'Unknown list.' });

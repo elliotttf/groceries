@@ -16,9 +16,26 @@
         success: function(data) {
           if (data.status == 'ok') {
             model.set(data.list);
+            model.items.reset(data.list.items);
           }
           else {
             alert('huh?');
+          }
+        },
+      });
+    }
+    else if (method == 'read') {
+      $.ajax({
+        url: 'app',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          if (data.status == 'ok') {
+            model.set(data.list);
+            model.items.reset(data.list.items);
+          }
+          else if (typeof model.id === 'undefined') {
+            model.set(model.defaults);
           }
         },
       });
@@ -33,6 +50,7 @@
         success: function(data) {
           if (data.status == 'ok') {
             model.set(data.list);
+            model.items.reset(data.list.items);
           }
           else {
             alert('huh?');
@@ -53,7 +71,6 @@
     template: _.template($('#item-template').html()),
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
-
       return this;
     },
     updateStatus: function(e) {
@@ -71,13 +88,14 @@
     events: {
       'click #add-item': 'addNewItem',
       'click #save-list': 'saveList',
-      'click #delete-list': 'deleteList',
+      'click #new-list': 'newList',
     },
     initialize: function() {
       this.model.items.bind('add', this.addOne, this);
       this.model.items.bind('reset', this.addAll, this);
+      this.model.bind('change', this.toggleListButtons, this);
     },
-        render: function() {
+    render: function() {
       $(this.el).html(this.template({
         total: this.model.items.length,
         remaining: this.model.remaining(),
@@ -87,9 +105,14 @@
     addOne: function(item) {
       var view = new ItemView({ model: item });
       $('#list').append(view.render().el);
+      if (item.get('inBasket')) {
+        $('#check-item' + item.id).attr('checked', true);
+      }
+
     },
     addAll: function() {
       var self = this;
+      $('#list').html('');
       self.model.items.each(function(item) {
         self.addOne(item);
       });
@@ -120,12 +143,26 @@
     },
     saveList: function() {
       this.model.save();
+      return false;
     },
-    deleteList: function() {
-    }
+    toggleListButtons: function() {
+      if (typeof this.model.id !== 'undefined') {
+        $('#new-list').show();
+      }
+      else {
+        $('#new-list').hide();
+      }
+    },
+    newList: function() {
+      this.model.clear({ silent: true });
+      this.model.items.reset();
+      this.toggleListButtons();
+      return false;
+    },
   });
 
   var list = window.list = new window.List();
+  list.fetch();
   var listView = window.listView = new ListView({
     model: list
   });

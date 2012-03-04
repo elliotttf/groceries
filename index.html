@@ -39,7 +39,7 @@
   <script type="text/template" id="item-template">
     <div class="item">
       <input class="check-item" id="check-item<%= id %>" name="item-<%= id %>" value="<%= inBasket %>" type="checkbox">
-      <label for="item-<% id %>"><%= name %></label>
+      <label for="check-item-<%= id %>"><%= name %></label>
     </div>
   </script>
 
@@ -61,8 +61,11 @@
       <div class="list-total">Total: <span id="list-total"><%= total %></span></div>
       <div class="list-remaining">Remaining: <span id="list-remaining"><%= remaining %></span></div>
     </div>
-    <a href="#" id="save-list" class="button">Save</a>
-    <a href="#" style="display: none" id="delete-list" class="button">Delete</a>
+    <div id="buttons">
+      <a href="#" id="save-list" class="button">Save</a>
+      <a href="#" style="display: none" id="new-list" class="button">New</a>
+      <a href="#" style="display: none" id="delete-list" class="button">Delete</a>
+    </div>
   </script>
 
   <!-- JavaScript at the bottom for fast page loading -->

@@ -6,48 +6,62 @@ var Backbone = require('backbone');
 var settings = require('../local');
 var mongous = require('mongous');
 var db = new mongous.Mongous('list.lists');
-var List = require('../../list');
-
-Backbone.sync = function(method, model, options) {
-  if (!(model instanceof List.List)) {
-    return;
-  }
-  if (method === 'read') {
-    db.find(1, { id: model.id }, function(reply) {
-      if (typeof reply.documents !== 'undefined' && typeof reply.documents[0] !== 'undefined') {
-        options.success(reply.documents[0], true);
-      }
-      else {
-        options.error(404);
-      }
-    });
-  }
-};
+var ObjectID = require('../../node_modules/mongous/bson/objectid')
 
 exports.attach = function(options) {
   this.load = function(id, callback) {
-    var model = new List.List({ id: id });
-    model.fetch({
-      succes: function(loadedModel) {
-        callback(false, model.toJSON());
-      },
-      error: function(error) {
-        callback(error, null);
-      }
-    })
+    if (id) {
+      // TODO
+    }
+    else {
+      db.find({}, function(reply) {
+        if (reply.documents.length == 0) {
+          callback(false, {});
+          return;
+        }
+        // NOTE - mongous doesn't support sorting natively :(
+        reply.documents.sort(function(a, b) {
+          if (a.changed > b.changed) {
+            return -1;
+          }
+          else if (a.changed < b.changed) {
+            return 1;
+          }
+          return 0;
+        });
+
+        // Massage the data a bit.
+        reply.documents[0].id = reply.documents[0]._id;
+        delete reply.documents[0]._id;
+        reply.documents[0];
+
+        callback(false, reply.documents[0]);
+      });
+    }
   };
 
   this.save = function(data, callback) {
-    // Make this a mongo id again.
-    if (typeof data.id !== 'undefined') {
-      data._id = data.id;
-      delete data.id;
-    }
     // Tag the save time.
     data.changed = new Date();
-    if (!db.save(data)) {
-      callback(true);
+
+    // Make this a mongo id again.
+    if (typeof data.id !== 'undefined') {
+      data._id = new ObjectID.ObjectID(data.id);
+      delete data.id;
+      if (!db.update({ _id: data._id }, data)) {
+        callback(true);
+        return;
+      }
+      data.id = data._id;
+      delete data._id;
+      callback(false, data);
       return;
+    }
+    else {
+      if (!db.insert(data)) {
+        callback(true);
+        return;
+      }
     }
     // HACK :(
     db.find(1, { changed: data.changed }, function(reply) {
