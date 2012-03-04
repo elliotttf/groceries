@@ -93,6 +93,8 @@
     initialize: function() {
       this.model.items.bind('add', this.addOne, this);
       this.model.items.bind('reset', this.addAll, this);
+      this.model.items.bind('reset', this.updateTotal, this);
+      this.model.items.bind('reset', this.updateRemaining, this);
       this.model.bind('change', this.toggleListButtons, this);
     },
     render: function() {
