@@ -1,4 +1,6 @@
 module.exports = {
-  port: 3000,
-  db: 'mongodb://localhost/list',
+  port: 3003,
+  db: {
+    host: 'localhost',
+  },
 };
