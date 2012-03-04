@@ -30,6 +30,11 @@ var Items = Backbone.Collection.extend({
 var List = Backbone.Model.extend({
   initialize: function() {
     this.items = new Items();
+    this.items.bind('add', this.update, this);
+    this.items.bind('remove', this.update, this);
+  },
+  update: function() {
+    this.save();
   },
   toJSON: function() {
     var json = _.clone(this.attributes);

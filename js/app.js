@@ -77,6 +77,7 @@
       $('#label-item' + this.model.id).toggleClass('checked');
       this.model.set('inBasket', e.currentTarget.checked);
       listView.updateRemaining();
+      list.save();
     },
   });
 
@@ -88,7 +89,6 @@
     template: _.template($('#list-template').html()),
     events: {
       'click #add-item': 'addNewItem',
-      'click #save-list': 'saveList',
       'click #new-list': 'newList',
     },
     initialize: function() {
@@ -143,10 +143,6 @@
       $('#new-item').val('');
       $('#new-item-cat').val('');
 
-      return false;
-    },
-    saveList: function() {
-      this.model.save();
       return false;
     },
     toggleListButtons: function() {
