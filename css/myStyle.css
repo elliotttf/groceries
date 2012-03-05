@@ -13,7 +13,7 @@
   color: #000000;
   padding: 5px;
   background: #d9d9d9;
-  border-radius: .25em;
+  border-radius: 25%;
   text-decoration: none;
 }
 .button:visited,
@@ -29,16 +29,16 @@
   position: absolute;
   top: 0;
   left: 50%;
-  height: 20px;
-  width: 20px;
-  border-radius: 10px;
+  height: 89.285714%;
+  width: 3.125%;
+  border-radius: 25%;
 }
 .remove-button {
   text-decoration: none;
-  font-size: 10px;
+  font-size: .625em;
   position: relative;
-  top: -3px;
-  left: 7px;
+  top: -18.75%;
+  left: 35%;
 }
 .item {
   position: relative;
@@ -49,19 +49,26 @@
 
 @media screen and (min-width: 640px) {
   #container {
-    width: 50%;
+    width: 640px;
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 640px) {
   #container {
-    width: 100%;
+    width: 96.875%;
     margin: 0 1.5%;
+    font-size: 2em;
+    line-height: 2.4em;
+  }
+
+  #new-item {
+    width: 96.875%;
   }
 
   .circle {
-    left: 92.18%;
+    left: 88.4375%;
+    width: 10%;
   }
 }
 
