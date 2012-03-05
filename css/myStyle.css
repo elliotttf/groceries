@@ -34,6 +34,7 @@
   border-radius: 25%;
 }
 .remove-button {
+  color: #000000;
   text-decoration: none;
   font-size: .625em;
   position: relative;
