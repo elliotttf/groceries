@@ -37,9 +37,10 @@
 
   <!-- Templates -->
   <script type="text/template" id="item-template">
-    <div class="item">
+    <div id="item-<%= id %>" class="item">
       <input class="check-item" id="check-item<%= id %>" name="item-<%= id %>" value="<%= inBasket %>" type="checkbox">
       <label id="label-item<%= id %>" for="check-item<%= id %>"><%= name %></label>
+      <div class="circle"><a href="#" id="remove-item<%= id %>" class="remove-button">x</a></div>
     </div>
   </script>
 

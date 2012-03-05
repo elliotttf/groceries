@@ -67,8 +67,12 @@
     tagName: 'li',
     events: {
       'change .check-item': 'updateStatus',
+      'click .remove-button': 'removeItem',
     },
     template: _.template($('#item-template').html()),
+    initialize: function() {
+      this.model.view = this;
+    },
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       return this;
@@ -78,6 +82,10 @@
       this.model.set('inBasket', e.currentTarget.checked);
       listView.updateRemaining();
       list.save();
+    },
+    removeItem: function(e) {
+      list.items.remove(this.model);
+      return false;
     },
   });
 
@@ -93,6 +101,7 @@
     },
     initialize: function() {
       this.model.items.bind('add', this.addOne, this);
+      this.model.items.bind('remove', this.removeOne, this);
       this.model.items.bind('reset', this.addAll, this);
       this.model.items.bind('reset', this.updateTotal, this);
       this.model.items.bind('reset', this.updateRemaining, this);
@@ -113,6 +122,9 @@
         $('#label-item' + item.id).addClass('checked');
       }
 
+    },
+    removeOne: function(item) {
+      $(item.view.el).remove();
     },
     addAll: function() {
       var self = this;
