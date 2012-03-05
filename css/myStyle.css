@@ -1,10 +1,7 @@
 #main {
   width: 100%;
 }
-#container {
-  width: 50%;
-  margin: 0 auto;
-}
+
 #list {
   list-style: none;
   padding: 0;
@@ -31,7 +28,7 @@
   background: #d9d9d9;
   position: absolute;
   top: 0;
-  right: 50%;
+  left: 50%;
   height: 20px;
   width: 20px;
   border-radius: 10px;
@@ -49,3 +46,22 @@
 .checked {
   text-decoration: line-through;
 }
+
+@media screen and (min-width: 640px) {
+  #container {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  #container {
+    width: 100%;
+    margin: 0 1.5%;
+  }
+
+  .circle {
+    left: 92.18%;
+  }
+}
+
