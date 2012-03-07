@@ -145,7 +145,7 @@
     },
     addNewItem: function(e) {
       var newItem = new Item({
-        id: list.items.length,
+        id: _.uniqueId(),
         name: $('#new-item').val(),
         type: $('#new-item-cat').val(),
       });
