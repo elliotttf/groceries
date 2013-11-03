@@ -17,7 +17,7 @@
           if (data.status == 'ok') {
             model.set(data.list);
             model.items.reset(data.list.items);
-            alertify.alert('List created on server');
+            alertify.success('List created on server');
           }
           else {
             alertify.error('huh?');
@@ -58,7 +58,7 @@
           if (data.status == 'ok') {
             model.set(data.list);
             model.items.reset(data.list.items);
-            alertify.alert('List updated');
+            alertify.success('List updated');
           }
           else {
             alertify.error('huh?');
