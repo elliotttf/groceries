@@ -191,9 +191,11 @@
         cancel: 'No'
       });
       alertify.confirm('Are you sure you want to start a new list?', function (e) {
-        self.model.clear({ silent: true });
-        self.model.items.reset();
-        self.toggleListButtons();
+        if (e) {
+          self.model.clear({ silent: true });
+          self.model.items.reset();
+          self.toggleListButtons();
+        }
       });
     },
   });
