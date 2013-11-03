@@ -1,0 +1,22 @@
+{
+  "name": "groceries",
+  "version": "0.1.0",
+  "homepage": "https://github.com/elliotttf/groceries",
+  "authors": [
+    "Elliott Foster <elliottf@codebrews.com>"
+  ],
+  "description": "Grocery lists for humans.",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "alertify.js": "git://github.com/fabien-d/alertify.js.git#~0.3.11",
+    "jquery": "~2.0.3"
+  }
+}

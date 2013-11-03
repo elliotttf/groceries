@@ -38,6 +38,7 @@ intermediate
 publish
 .idea
 js/node_modules
+bower_components
 
 # Config files
 js/server/local.js
