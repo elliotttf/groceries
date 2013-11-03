@@ -1,8 +1,8 @@
-(function($) {
+(function($, alertify) {
   /**
    * Override sync behavior.
    */
-  Backbone.sync = function(method, model, options) {
+  Backbone.sync = function (method, model, options) {
     if (!(model instanceof List)) {
       return;
     }
@@ -13,15 +13,19 @@
         contentType: 'application/json',
         data: JSON.stringify(model.toJSON()),
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
           if (data.status == 'ok') {
             model.set(data.list);
             model.items.reset(data.list.items);
+            alertify.alert('List created on server');
           }
           else {
-            alert('huh?');
+            alertify.error('huh?');
           }
         },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alertify.error('Problem saving list to the server.');
+        }
       });
     }
     else if (method == 'read') {
@@ -37,6 +41,9 @@
           else if (typeof model.id === 'undefined') {
             model.set(model.defaults);
           }
+          else {
+            alertify.error('Problem loading list from server.');
+          }
         },
       });
     }
@@ -51,9 +58,10 @@
           if (data.status == 'ok') {
             model.set(data.list);
             model.items.reset(data.list.items);
+            alertify.alert('List updated');
           }
           else {
-            alert('huh?');
+            alertify.error('huh?');
           }
         },
       });
@@ -99,6 +107,7 @@
       'click #add-item': 'addNewItem',
       'click #new-list': 'newList',
     },
+
     initialize: function() {
       this.model.items.bind('add', this.addOne, this);
       this.model.items.bind('remove', this.removeOne, this);
@@ -107,6 +116,7 @@
       this.model.items.bind('reset', this.updateRemaining, this);
       this.model.bind('change', this.toggleListButtons, this);
     },
+
     render: function() {
       $(this.el).html(this.template({
         total: this.model.items.length,
@@ -114,6 +124,7 @@
       }));
       return this;
     },
+
     addOne: function(item) {
       var view = new ItemView({ model: item });
       $('#list').append(view.render().el);
@@ -123,9 +134,11 @@
       }
 
     },
+
     removeOne: function(item) {
       $(item.view.el).remove();
     },
+
     addAll: function() {
       var self = this;
       $('#list').html('');
@@ -133,17 +146,22 @@
         self.addOne(item);
       });
     },
+
     updateCount: function() {
       this.updateTotal();
       this.updateRemaining();
     },
+
     updateTotal: function() {
       $('#list-total').html(this.model.items.length);
     },
+
     updateRemaining: function() {
       $('#list-remaining').html(this.model.remaining());
     },
+
     addNewItem: function(e) {
+      e.preventDefault();
       var newItem = new Item({
         id: _.uniqueId(),
         name: $('#new-item').val(),
@@ -154,9 +172,8 @@
 
       $('#new-item').val('');
       $('#new-item-cat').val('');
-
-      return false;
     },
+
     toggleListButtons: function() {
       if (typeof this.model.id !== 'undefined') {
         $('#new-list').show();
@@ -165,11 +182,18 @@
         $('#new-list').hide();
       }
     },
-    newList: function() {
-      this.model.clear({ silent: true });
-      this.model.items.reset();
-      this.toggleListButtons();
-      return false;
+
+    newList: function (e) {
+      e.preventDefault();
+      alertify.set({
+        ok: 'Yes',
+        cancel: 'No'
+      });
+      alertify.confirm('Are you sure you want to start a new list?', function (e) {
+        this.model.clear({ silent: true });
+        this.model.items.reset();
+        this.toggleListButtons();
+      });
     },
   });
 
@@ -180,4 +204,4 @@
   });
 
   listView.render();
-})(jQuery);
+})(jQuery, alertify);
