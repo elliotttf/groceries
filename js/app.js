@@ -184,15 +184,16 @@
     },
 
     newList: function (e) {
+      var self = this;
       e.preventDefault();
       alertify.set({
         ok: 'Yes',
         cancel: 'No'
       });
       alertify.confirm('Are you sure you want to start a new list?', function (e) {
-        this.model.clear({ silent: true });
-        this.model.items.reset();
-        this.toggleListButtons();
+        self.model.clear({ silent: true });
+        self.model.items.reset();
+        self.toggleListButtons();
       });
     },
   });
