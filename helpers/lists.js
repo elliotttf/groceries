@@ -20,7 +20,7 @@ if (!_.isEmpty(config.db.username) && !_.isEmpty(config.db.password)) {
 module.exports = {
   auth: auth,
   load: function (id, cb) {
-    db('list.lists').find({}, function (reply) {
+    db(coll).find({}, function (reply) {
       if (reply.documents.length == 0) {
         cb(false, {});
         return;
@@ -52,7 +52,7 @@ module.exports = {
     if (typeof data.id !== 'undefined') {
       data._id = new ObjectID.ObjectID(data.id);
       delete data.id;
-      if (!db('list.lists').update({ _id: data._id }, data)) {
+      if (!db(coll).update({ _id: data._id }, data)) {
         cb(true);
         return;
       }
@@ -62,13 +62,13 @@ module.exports = {
       return;
     }
     else {
-      if (!db('list.lists').insert(data)) {
+      if (!db(coll).insert(data)) {
         cb(true);
         return;
       }
     }
     // HACK :(
-    db('list.lists').find(1, { changed: data.changed }, function (reply) {
+    db(coll).find(1, { changed: data.changed }, function (reply) {
       if (typeof reply.documents[0] !== 'undefined') {
         // Massage the reply a bit...
         reply.documents[0].id = reply.documents[0]._id;
