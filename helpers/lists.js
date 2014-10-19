@@ -11,8 +11,8 @@ var auth = function (cb) {
 
 if (!_.isEmpty(config.db.username) && !_.isEmpty(config.db.password)) {
   auth = function (cb) {
-    db(coll).auth(config.db.username, config.db.password, function (err) {
-      cb(err);
+    db(config.db.db + '.$cmd').auth(config.db.username, config.db.password, function (res) {
+      cb(res);
     });
   };
 }
