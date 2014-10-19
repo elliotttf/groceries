@@ -1,0 +1,80 @@
+#main {
+  width: 100%;
+}
+
+#list {
+  list-style: none;
+  padding: 0;
+}
+#buttons {
+  margin-top: 1em;
+}
+.button {
+  color: #000000;
+  padding: 5px;
+  background: #d9d9d9;
+  border-radius: 25%;
+  text-decoration: none;
+}
+.button:visited,
+.remove-button:visited {
+  color: #000000;
+}
+.button:hover,
+.remove-button:hover {
+  color: #ffffff;
+}
+.circle {
+  background: #d9d9d9;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 89.285714%;
+  width: 3.125%;
+  border-radius: 25%;
+}
+.remove-button {
+  color: #000000;
+  text-decoration: none;
+  font-size: .625em;
+  position: relative;
+  top: -18.75%;
+  left: 35%;
+}
+.item {
+  position: relative;
+}
+.checked {
+  text-decoration: line-through;
+}
+
+@media screen and (min-width: 640px) {
+  #container {
+    width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  #container {
+    width: 96.875%;
+    margin: 0 1.5%;
+    font-size: 1.25em;
+    line-height: 1.65em;
+  }
+
+  #new-item {
+    width: 96.875%;
+  }
+
+  .circle {
+    left: 88.4375%;
+    width: 10%;
+  }
+
+  input[type="checkbox"] {
+    -webkit-transform: scale(2);
+    margin: 3px 1.5ex;
+  }
+}
+
