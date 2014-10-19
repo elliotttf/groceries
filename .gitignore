@@ -37,8 +37,8 @@ dwsync.xml
 intermediate
 publish
 .idea
-js/node_modules
-bower_components
+node_modules
+public/bower_components
 
 # Config files
 js/server/local.js
@@ -46,3 +46,4 @@ js/server/local.js
 # build script local files
 build/buildinfo.properties
 build/config/buildinfo.properties
+>>>>>>> heroku
