@@ -8,15 +8,15 @@
     "postinstall": "node node_modules/bower/bin/bower install"
   },
   "dependencies": {
-    "body-parser": "~1.0.0",
+    "body-parser": "~1.17.2",
     "bower": "^1.3.12",
-    "cookie-parser": "~1.0.1",
-    "debug": "~0.7.4",
-    "express": "~4.2.0",
-    "jade": "~1.3.0",
-    "lodash": "^2.4.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.8",
+    "express": "~4.15.4",
+    "jade": "~1.11.0",
+    "lodash": "^4.17.4",
     "mongous": "^0.2.6",
-    "morgan": "~1.0.0",
+    "morgan": "~1.8.2",
     "static-favicon": "~1.0.0"
   }
 }
