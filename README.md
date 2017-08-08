@@ -1,5 +1,7 @@
 # Simple Grocery List
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/elliotttf/groceries.svg)](https://greenkeeper.io/)
+
 This list app is simple, keep it that way.
 
 ## Configuration
